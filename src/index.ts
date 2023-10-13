@@ -8,7 +8,7 @@ import { MyService }  from './services/my.service';
 import { AuthService }  from './services/auth.service';
 import { StopListService }  from './services/stoplist.service';
 import { CallbackService }  from './services/callback.service';
-// import { CallService }  from './services/call.service';
+import { CallService }  from './services/call.service';
 // import { SmsService }  from './services/sms.service';
 
 // Container.set(ApiToken, '07AD42B3-2BBF-6768-EAB7-38C88523CDBA');
@@ -25,7 +25,7 @@ const My = Container.get(MyService);
 const Auth = Container.get(AuthService);
 const stopList = Container.get(StopListService);
 const callback = Container.get(CallbackService);
-// const call = Container.get(CallService);
+const call = Container.get(CallService);
 // const sms = Container.get(SmsService);
 
 My.getBalance()
