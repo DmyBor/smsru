@@ -9,7 +9,7 @@ import { AuthService }  from './services/auth.service';
 import { StopListService }  from './services/stoplist.service';
 import { CallbackService }  from './services/callback.service';
 import { CallService }  from './services/call.service';
-// import { SmsService }  from './services/sms.service';
+import { SmsService }  from './services/sms.service';
 
 // Container.set(ApiToken, '07AD42B3-2BBF-6768-EAB7-38C88523CDBA');
 const auth = require('../config.json');
@@ -26,7 +26,7 @@ const Auth = Container.get(AuthService);
 const stopList = Container.get(StopListService);
 const callback = Container.get(CallbackService);
 const call = Container.get(CallService);
-// const sms = Container.get(SmsService);
+const sms = Container.get(SmsService);
 
 My.getBalance()
   .then((response) => { 
@@ -81,18 +81,32 @@ My.getBalance()
   //   console.log(response);
   //   return call.sendAuthCode('79539284707', '33.22.11.55');
   // })
-  // .then((response) => {
-  //   console.log(response)
-  //   return sms.getSmsCost();
-  // })
-  // .then((response) => {
-  //   console.log(response)
-  //   return sms.sendSms();
-  // })
-  // .then((response) => {
-  //   console.log(response)
-  //   return sms.getStatus();
-  // })
+  .then((response) => {
+    console.log(response)
+    return sms.getSmsCost([79539284707,74993221627], "test");
+  })
+  .then((response) => {
+    console.log(response)
+    return sms.getSmsCost({
+      "79539284707": "test1",
+      "74993221627": "test2"
+    });
+  })
+  .then((response) => {
+    console.log(response)
+    return sms.sendSms([79539284707,74993221627], "test");
+  })
+  .then((response) => {
+    console.log(response)
+    return sms.sendSms({
+      "79539284707": "test1",
+      "74993221627": "test2"
+    });
+  })
+  .then((response) => {
+    console.log(response)
+    return sms.getSmsStatus(['202341-1000001']);
+  })
   .then((response) => {
     console.log(response)
   })

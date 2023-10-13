@@ -1,38 +1,88 @@
 import { Service, Inject } from 'typedi';
-
-import { SmsApiProvider } from '../providers/SmsApiProvider';
-import { CredentialProvider } from '../providers/CredentialProvider';
+import { RequestProvider } from '../providers/RequestProvider';
 
 import {
   SmsRequestDTO,
-  getSmsStatusRequestDTO,
+  GetSmsStatusRequestDTO,
+  SmsRequest,
+  GetSmsStatusRequest,
+  SmsResponse,
+  GetSmsStatusResponse,
 } from "../models/SmsApiProviderDto";
+
+import { serializeResponse } from "../decorators/serializeResponse";
 
 @Service()
 export class SmsService {
 
   constructor(
-    @Inject()
-    private credProvider: CredentialProvider,
-    private apiProvider: SmsApiProvider
+    @Inject() private requestProvider: RequestProvider
   ) { }
 
-  async getSmsCost(phone: string, ip: string) {
+  @serializeResponse(SmsResponse)
+  async getSmsCost(phones: Record<string, string> | number[], text: string | undefined = undefined): Promise<SmsResponse> {
     const data: SmsRequestDTO = {
-      phone,
-      ip,
-      json: 1,
-      ...this.credProvider.getCredentials()
+      json: 1
     };
 
-    return await this.apiProvider.getSmsCost(data);
+    if (Array.isArray(phones)) {
+      data.to = phones.join(',');
+      data.msg = text;
+    } else {
+      for (let key in phones) {
+        const k = `to[${key}]`;
+        data[k] = phones[key];
+      }
+    }
+
+    const requestData: SmsRequest = {
+      url: 'https://sms.ru/sms/cost',
+      method: 'POST',
+      body: data
+    };
+    const resp = await this.requestProvider.sendRequest<SmsResponse>(requestData);
+    return resp;
   }
 
-  async sendSms(phone: string, ip: string) {
-    
+  @serializeResponse(SmsResponse)
+  async sendSms(phones: Record<string, string> | number[], text: string | undefined = undefined): Promise<SmsResponse> {
+    const data: SmsRequestDTO = {
+      json: 1
+    };
+
+    if (Array.isArray(phones)) {
+      data.to = phones.join(',');
+      data.msg = text;
+    } else {
+      for (let key in phones) {
+        const k = `to[${key}]`;
+        data[k] = phones[key];
+      }
+    }
+
+    const requestData: SmsRequest = {
+      url: 'https://sms.ru/sms/send',
+      method: 'POST',
+      body: data
+    };
+
+    const resp = await this.requestProvider.sendRequest<SmsResponse>(requestData);
+    return resp;
   }
 
-  async getSmsStatus(phone: string, ip: string) {
-   
+  @serializeResponse(GetSmsStatusResponse)
+  async getSmsStatus(smsId: string[]): Promise<GetSmsStatusResponse>  {
+    if (smsId.length === 0) throw new Error('smsId is empty');
+
+    const requestData: GetSmsStatusRequest = {
+      url: 'https://sms.ru/sms/status',
+      method: 'POST',
+      body: {
+        sms_id: smsId.join(','),
+        json: 1
+      }
+    };
+    const resp = await this.requestProvider.sendRequest<GetSmsStatusResponse>(requestData);
+    return resp;
   }
 }

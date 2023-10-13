@@ -1,25 +1,23 @@
 import { ApiRequestOptions, ApiRequestBodyOptions, ApiResponseBase } from '../types/CoreTypes';
 
 export interface SmsRequestDTO  extends ApiRequestBodyOptions {
-  to: string[];
-  msg: string;
+  msg?: string;
+  [keys: string]: any;
 }
-export interface getSmsStatusRequestDTO  extends ApiRequestBodyOptions {
-  phone: string;
-  ip: string;
+export interface GetSmsStatusRequestDTO  extends ApiRequestBodyOptions {
+  sms_id: string;
 }
-
 
 export interface SmsRequest extends ApiRequestOptions {
   body: SmsRequestDTO;
 }
-export interface getSmsStatusRequest extends ApiRequestOptions {
-  body: getSmsStatusRequestDTO;
+export interface GetSmsStatusRequest extends ApiRequestOptions {
+  body: GetSmsStatusRequestDTO;
 }
 
 export class SmsResponse extends ApiResponseBase {
   balance: number;
 }
-export class getSmsStatusResponse extends ApiResponseBase {
+export class GetSmsStatusResponse extends ApiResponseBase {
   balance: number;
 }
