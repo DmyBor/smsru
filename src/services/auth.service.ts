@@ -16,7 +16,7 @@ export class AuthService {
   ) {}
 
   // TODO I don't like JSON response in every function, need to refactor
-  @serializeResponse(new checkAuthResponse)
+  @serializeResponse(checkAuthResponse)
   async checkAuth(): Promise<checkAuthResponse> {
 
     const requestData: checkAuthRequest = {

@@ -19,7 +19,7 @@ export class MyService {
   ) {}
 
   // TODO I don't like JSON response in every function,
-  @serializeResponse(new getBalanceResponse)
+  @serializeResponse(getBalanceResponse)
   async getBalance(): Promise<getBalanceResponse> {
     const requestData: getMyRequest = {
       url: 'https://sms.ru/my/balance',
@@ -32,7 +32,7 @@ export class MyService {
     return await this.requestProvider.sendRequest<getBalanceResponse>(requestData);
   }
 
-  @serializeResponse(new getLimitsResponse)
+  @serializeResponse(getLimitsResponse)
   async getLimits(): Promise<getLimitsResponse> {
     const requestData: getMyRequest = {
       url: 'https://sms.ru/my/limit',
@@ -46,7 +46,7 @@ export class MyService {
     return resp;
   }
 
-  @serializeResponse(new getFreeUsageResponse)
+  @serializeResponse(getFreeUsageResponse)
   async getFreeUsage(): Promise<getFreeUsageResponse> {
     const requestData: getMyRequest = {
       url: 'https://sms.ru/my/free',
@@ -60,7 +60,7 @@ export class MyService {
     return resp;
   }
 
-  @serializeResponse(new getSendersResponse)
+  @serializeResponse(getSendersResponse)
   async getSenders(): Promise<getSendersResponse> {
     const requestData: getMyRequest = {
       url: 'https://sms.ru/my/senders',

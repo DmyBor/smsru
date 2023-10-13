@@ -23,7 +23,7 @@ export class StopListService {
   ) { }
 
   // TODO I don't like JSON response in every function, need to refactor
-  @serializeResponse(new addPhoneResponse)
+  @serializeResponse(addPhoneResponse)
   async addPhone(phone: string, text: string): Promise<addPhoneResponse> {
     const data: addPhoneRequestDTO = {
       stoplist_phone: phone,
@@ -41,7 +41,7 @@ export class StopListService {
     return resp;
   }
 
-  @serializeResponse(new deletePhoneResponse)
+  @serializeResponse(deletePhoneResponse)
   async deletePhone(phone: string): Promise<deletePhoneResponse> {
     const data: deletePhoneRequestDTO = {
       stoplist_phone: phone,
@@ -58,7 +58,7 @@ export class StopListService {
     return resp;
   }
 
-  @serializeResponse(new getPhonesResponse)
+  @serializeResponse(getPhonesResponse)
   async getPhones(): Promise<getPhonesResponse> {
     const requestData: getPhonesRequest = {
       url: 'https://sms.ru/stoplist/get',

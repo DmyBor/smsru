@@ -1,7 +1,7 @@
 import { ApiResponseBase } from '../types/CoreTypes';
-import { plainToClassFromExist  } from 'class-transformer';
+import { plainToClass  } from 'class-transformer';
 
-export function serializeResponse(value: ApiResponseBase) {
+export function serializeResponse(value: typeof ApiResponseBase) {
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     let method = descriptor.value!;
  
@@ -11,7 +11,7 @@ export function serializeResponse(value: ApiResponseBase) {
         let result: Promise<ApiResponseBase> = method.apply(this, _arguments);
         result.
           then((data: ApiResponseBase) => {
-            const resp = plainToClassFromExist(value, data);
+            const resp = plainToClass(value, data);
             resolve(resp);
           })
           .catch((err: any) => {
