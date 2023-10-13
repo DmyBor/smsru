@@ -11,7 +11,7 @@ export class CredentialProvider {
   @Inject(LoginToken)
   LoginToken: LoginTokenType;
 
-  getCredentials() {
+  getCredentials(): any  {
     if (this.ApiToken) return { api_id: this.ApiToken };
     if (this.LoginToken?.login && this.LoginToken?.password) return this.LoginToken;
 
