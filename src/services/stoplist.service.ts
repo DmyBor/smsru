@@ -60,14 +60,12 @@ export class StopListService {
 
   @serializeResponse(new getPhonesResponse)
   async getPhones(): Promise<getPhonesResponse> {
-    const data: getPhonesRequestDTO = {
-      json: 1
-    };
-
     const requestData: getPhonesRequest = {
       url: 'https://sms.ru/stoplist/get',
       method: 'POST',
-      body: data
+      body: {
+        json: 1
+      }
     };
 
     const resp = await this.requestProvider.sendRequest<getPhonesResponse>(requestData);
