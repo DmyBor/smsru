@@ -5,7 +5,7 @@ import { ApiToken } from './tokens/api.token';
 import { LoginToken } from './tokens/login.token';
 
 import { MyService }  from './services/my.service';
-// import { AuthService }  from './services/auth.service';
+import { AuthService }  from './services/auth.service';
 // import { StopListService }  from './services/stoplist.service';
 // import { CallbackService }  from './services/callback.service';
 // import { CallService }  from './services/call.service';
@@ -22,7 +22,7 @@ Container.set(ApiToken, null);
 // Container.set(ApiToken, auth.apiKey);
 
 const My = Container.get(MyService);
-// const Auth = Container.get(AuthService);
+const Auth = Container.get(AuthService);
 // const stopList = Container.get(StopListService);
 // const callback = Container.get(CallbackService);
 // const call = Container.get(CallService);
@@ -41,10 +41,10 @@ My.getBalance()
     console.log(response)
     return My.getSenders();
   })
-  // .then((response) => {
-  //   console.log(response);
-  //   return Auth.checkAuth();
-  // })
+  .then((response) => {
+    console.log(response);
+    return Auth.checkAuth();
+  })
   // .then((response) => {
   //   console.log(response);
   //   return stopList.addPhone('79539284708', 'test');

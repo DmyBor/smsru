@@ -1,10 +1,8 @@
 import { Service, Inject } from 'typedi';
-
-import { MyApiProvider }  from '../providers/MyApiProvider';
-import { CredentialProvider }  from '../providers/CredentialProvider';
 import { RequestProvider }  from '../providers/RequestProvider';
 
-import { getMyRequestDTO,
+import { 
+  getMyRequestDTO,
   getMyRequest, 
   getBalanceResponse, 
   getLimitsResponse,
@@ -17,8 +15,7 @@ import { serializeResponse } from "../decorators/serializeResponse";
 @Service()
 export class MyService {
   constructor(
-    @Inject()
-    private requestProvider : RequestProvider
+    @Inject() private requestProvider : RequestProvider
   ) {}
 
   // TODO I don't like JSON response in every function,
