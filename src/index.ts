@@ -7,7 +7,7 @@ import { LoginToken } from './tokens/login.token';
 import { MyService }  from './services/my.service';
 import { AuthService }  from './services/auth.service';
 import { StopListService }  from './services/stoplist.service';
-// import { CallbackService }  from './services/callback.service';
+import { CallbackService }  from './services/callback.service';
 // import { CallService }  from './services/call.service';
 // import { SmsService }  from './services/sms.service';
 
@@ -24,7 +24,7 @@ Container.set(ApiToken, null);
 const My = Container.get(MyService);
 const Auth = Container.get(AuthService);
 const stopList = Container.get(StopListService);
-// const callback = Container.get(CallbackService);
+const callback = Container.get(CallbackService);
 // const call = Container.get(CallService);
 // const sms = Container.get(SmsService);
 
@@ -61,22 +61,22 @@ My.getBalance()
     console.log(response);
     return stopList.getPhones();
   })
-  // .then((response) => {
-  //   console.log(response);
-  //   return callback.addCallback("http://example.com/callback");
-  // })
-  // .then((response) => {
-  //   console.log(response);
-  //   return callback.getCallbacks();
-  // })
-  // .then((response) => {
-  //   console.log(response);
-  //   return callback.deleteCallback("http://example.com/callback");
-  // })
-  // .then((response) => {
-  //   console.log(response);
-  //   return callback.getCallbacks();
-  // })
+  .then((response) => {
+    console.log(response);
+    return callback.addCallback("http://example.com/callback");
+  })
+  .then((response) => {
+    console.log(response);
+    return callback.getCallbacks();
+  })
+  .then((response) => {
+    console.log(response);
+    return callback.deleteCallback("http://example.com/callback");
+  })
+  .then((response) => {
+    console.log(response);
+    return callback.getCallbacks();
+  })
   // .then((response) => {  
   //   console.log(response);
   //   return call.sendAuthCode('79539284707', '33.22.11.55');
